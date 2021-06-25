@@ -1,3 +1,8 @@
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
 //this is for fadeout img.
 let day1_transparency = 255,
     day2_transparency = 255,

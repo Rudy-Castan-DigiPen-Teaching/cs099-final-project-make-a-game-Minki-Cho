@@ -1,6 +1,7 @@
-let day2_bg_check = false;
-let day3_bg_check = false;
-let day4_bg_check = false;
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
 
 function preload_characters()
 {
@@ -19,11 +20,7 @@ function drawing_lines_characters()//drawing lines and characters
 {
     for(let i = 0; i < 5; i++)
     {
-        /*push();
-        stroke(0);
-        line(0, i * line_size , width , i * line_size);
-        pop();*/
-            
+ 
         if(i === 2)//player position
         {
             fill('orange');

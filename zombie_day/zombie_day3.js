@@ -1,3 +1,8 @@
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
 //day_count
 let zombies_day3_wave1 = new Array;
 let zombies_day3_wave2 = new Array;
@@ -105,5 +110,4 @@ function zombie_day3_draw()
     {
         zombie_day_update( zombies_day3_wave10 );
     }
-
 }

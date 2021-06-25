@@ -1,3 +1,8 @@
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
 let ai_4_survived = true;
 
 class draw_ai_4

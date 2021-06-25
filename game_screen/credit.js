@@ -1,29 +1,41 @@
-let img1, img2 
-
-function credit_preload()
-{
-    img1 = loadImage("/assets/images/zombies/normal_zombie.png");
-    img2 = loadImage("/assets/images/zombies/white_zombie.png");
-}
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
 
 function credit()
 {
     clear();
     push();
-    background( 50 );
+    background( 60 );
     imageMode( CORNER );
     image( back_img, width - 80, height - 80 );
-
-    scale(7.0);
-    image(img1,20,0)
-    image(img2,90,0);
-    pop();
     
-    fill('black');
-    text("Hello~ I am",200,250);
-    text("Hello~ I am",670,250);
+    image(menu_img,0,0);
 
-    push();
+    rect(30,120,300,360);
+    rect(660,120,300,100);
+    fill(0);
+    textSize(40);
+    textFont(new_text_font);
+    text("CREDIT",30,60);
+    //fill(9, 218, 25);
+    textSize(20);
+    text("THE TEAM",40,150);
+    text("Thanks To",670,150);
+    textSize(15);
+    text("PROGRAMMING",40, 190);
+    text("GRAPHICS",40, 240);
+    text("Game design",40, 300);
+    text("Sound design",40, 350);
+    textSize(11);
+    text("Minjae Yoo \nMinki Cho",130,210);
+    text("Minjae Yoo \nMinki Cho",130,260);
+    text("Minjae Yoo \nMinki Cho",130,320);
+    text("Minjae Yoo \nMinki Cho",130,370);
+    text("BlinkFarm. www.youtube.com/blinkfarm",670,180);
+
+
     if ( mouseX < width - 30 && mouseX > width - 80 )
     {
         if ( mouseY < height - 30 && mouseY > height - 80 )

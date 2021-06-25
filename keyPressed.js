@@ -1,3 +1,12 @@
+// Name       : Minjae Yoo, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
+const fixed_reload_time = 30;
+let reload_time = fixed_reload_time;
+let reload_check = false;
+
 //This function is for main_menu game start, how to play and credit.
 function keyPressed()
 {
@@ -6,7 +15,6 @@ function keyPressed()
         if ( keyCode == ENTER )
         {
             game_mode = GAME_START;
-            
         }
     }
 
@@ -23,10 +31,14 @@ function keyPressed()
     {
         if ( keyCode === 82 )
         {
-            if ( player_gun_bullet == 0 )
+            reload_check = true;
+            if ( player_gun_bullet >= 0 && player_gun_bullet != 7 && reload_check == true )
             {
                 reload_sound.play();
-                player_gun_bullet = 7;
+                /*if ( reload_time <= 0 )
+                {
+                    player_gun_bullet = 7;
+                }*/
             }
         }
     }
@@ -46,42 +58,42 @@ function keyPressed()
 
     }
 
-    //move to next day when AI is picked
-    if ( game_mode == INTERMISSION )
-    {
-        if ( ai_picked == true && !ready_for_day2 )
-        {
-            ready_for_day2 = true;
-            ai_picked = false;
-            player_gun_bullet = 7;
-        }
+    // //move to next day when AI is picked
+    // if ( game_mode == INTERMISSION )
+    // {
+    //     if ( ai_picked == true && !ready_for_day2 )
+    //     {
+    //         ready_for_day2 = true;
+    //         ai_picked = false;
+    //         player_gun_bullet = 7;
+    //     }
 
-        if ( ai_picked == true && !ready_for_day3 )
-        {
-            ready_for_day3 = true;
-            ai_picked = false;
-            player_gun_bullet = 7;
-        }
+    //     if ( ai_picked == true && !ready_for_day3 )
+    //     {
+    //         ready_for_day3 = true;
+    //         ai_picked = false;
+    //         player_gun_bullet = 7;
+    //     }
 
-        if ( ai_picked == true && !ready_for_day4 )
-        {
-            ready_for_day4 = true;
-            ai_picked = false;
-            player_gun_bullet = 7;
-        }
+    //     if ( ai_picked == true && !ready_for_day4 )
+    //     {
+    //         ready_for_day4 = true;
+    //         ai_picked = false;
+    //         player_gun_bullet = 7;
+    //     }
 
-        if ( ai_picked == true && !ready_for_day5 )
-        {
-            ready_for_day5 = true;
-            ai_picked = false;
-            player_gun_bullet = 7;
-        }
+    //     if ( ai_picked == true && !ready_for_day5 )
+    //     {
+    //         ready_for_day5 = true;
+    //         ai_picked = false;
+    //         player_gun_bullet = 7;
+    //     }
 
-        if ( ai_picked == true && !ready_for_day_final )
-        {
-            ready_for_day_final = true;
-            ai_picked = false;
-            player_gun_bullet = 7;
-        }
-    }
+    //     if ( ai_picked == true && !ready_for_day_final )
+    //     {
+    //         ready_for_day_final = true;
+    //         ai_picked = false;
+    //         player_gun_bullet = 7;
+    //     }
+    //}
 }

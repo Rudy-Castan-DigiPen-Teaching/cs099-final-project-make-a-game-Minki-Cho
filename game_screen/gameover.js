@@ -1,3 +1,8 @@
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
 let game_over_img;
 let text_y_pos2 = 500;
 
@@ -63,6 +68,5 @@ function game_ending()
             image( game_over_img, 100, 100 );
             pop();
         }
-
     }
 }

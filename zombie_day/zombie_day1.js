@@ -1,3 +1,8 @@
+// Name       : Minjae Yu, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
 //day_count
 let zombies_day1_wave1 = new Array;
 let zombies_day1_wave2 = new Array;
@@ -17,22 +22,22 @@ function zombie_day1_setup()
     {
         zombies_day1_wave1[ count1 ] = new zombies( 0 );
     }
-    for ( let count2 = 0; count2 < 10; count2++ )
-    {
-        zombies_day1_wave2[ count2 ] = new zombies( 0 );
-    }
-    for ( let count3 = 0; count3 < 10; count3++ )
-    {
-        zombies_day1_wave3[ count3 ] = new zombies( 0 );
-    }
-    for ( let count4 = 0; count4 < 10; count4++ )
-    {
-        zombies_day1_wave4[ count4 ] = new zombies( 0 );
-    }
-    for ( let count5 = 0; count5 < 5; count5++ )
-    {
-        zombies_day1_wave5[ count5 ] = new zombies( 0 );
-    }
+    // for ( let count2 = 0; count2 < 10; count2++ )
+    // {
+    //     zombies_day1_wave2[ count2 ] = new zombies( 0 );
+    // }
+    // for ( let count3 = 0; count3 < 10; count3++ )
+    // {
+    //     zombies_day1_wave3[ count3 ] = new zombies( 0 );
+    // }
+    // for ( let count4 = 0; count4 < 10; count4++ )
+    // {
+    //     zombies_day1_wave4[ count4 ] = new zombies( 0 );
+    // }
+    // for ( let count5 = 0; count5 < 5; count5++ )
+    // {
+    //     zombies_day1_wave5[ count5 ] = new zombies( 0 );
+    // }
     // for ( let count6 = 0; count6 < 20; count6++ )
     // {
     //     zombies_day1_wave6[ count6 ] = new zombies();

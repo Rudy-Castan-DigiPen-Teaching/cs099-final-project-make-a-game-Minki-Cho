@@ -1,9 +1,14 @@
+// Name       : Minjae Yoo, Minki Cho
+// Assignment : Final Project - Make a Game
+// Course     : CS099
+// Spring 2021
+
 //wall
 let line_size = 100;
 let game_wall;
 
 //ai
-let ai;
+//let ai;
 let ai_1, ai_2, ai_3, ai_4;
 
 //game_mode
@@ -64,16 +69,11 @@ let day1_img, day2_img, day3_img, day4_img, day5_img;
 //check AI is picked or not once
 let ai_picked = false;
 
-let check_keyIsPressed = false;
-
 //This is for ai_bullet 
 let ai_1_isShoot = true;
 let ai_2_isShoot = true;
 let ai_3_isShoot = true;
 let ai_4_isShoot = true;
-
-//text_box image
-let textBox_img, textBox2_img, textBox3_img, textBox4_img;
 
 let scoreBox_img;
 
@@ -91,17 +91,14 @@ function preload()
     day_fadeout_img_preload();
     game_over_preload();
     howToPlay_preload();
-    credit_preload();
     fadeout_preload();
+    arrow_preload();
     hit_sound = loadSound( 'assets/sounds/hit_2.wav' );
     left_bullet_img = loadImage( 'assets/images/left_bullet.png' );
-    textBox_img = loadImage( 'assets/images/game_background/textbox.png' );
-    textBox2_img = loadImage( 'assets/images/game_background/textbox2.png' );
-    textBox3_img = loadImage( 'assets/images/game_background/textbox3.png' );
-    scoreBox_img = loadImage( 'assets/images/game_background/scorebox.png' );
     textBox4_img = loadImage( 'assets/images/game_background/textbox4.png' );
     ai_picked_img = loadImage( 'assets/images/player_and_ai/ai_focus.png');
     will_img = loadImage('assets/images/game_background/will.png');
+    scoreBox_img = loadImage('assets/images/game_background/scorebox.png');
 }
 
 function setup()
@@ -142,8 +139,8 @@ function setup()
     ai_3_survived = true;
     ai_4_survived = true;
     ai_1_isShoot = true;
-    ai_1_isShoot = true;
-    ai_1_isShoot = true;
+    ai_2_isShoot = true;
+    ai_3_isShoot = true;
     ai_4_isShoot = true;
 
     //ai_damage setup
@@ -153,10 +150,10 @@ function setup()
     ai_4_damage = round( random( 0.5, 1 ), 1 );
 
     //ai_rate_of_fire
-    ai_1_speed = round( random( 10, 30 ), 1 );
-    ai_2_speed = round( random( 10, 30 ), 1 );
-    ai_3_speed = round( random( 10, 30 ), 1 );
-    ai_4_speed = round( random( 10, 30 ), 1 );
+    ai_1_speed = int( random( 10, 30 ) );
+    ai_2_speed = int( random( 10, 30 ) );
+    ai_3_speed = int( random( 10, 30 ) );
+    ai_4_speed = int( random( 10, 30 ) );
 
     //fadeout reset
     screen_transparency = 0;
@@ -173,8 +170,8 @@ function setup()
 function draw()
 {
     background( 110 );
-    //console.log(frameCount)
-    //console.log(ready_for_day_final)
+    console.log(ai_1_speed)
+    //console.log(( frameCount * ai_1_speed ) % 60 )
 
     let zombie_day1_length = zombies_day1_wave1.length + zombies_day1_wave2.length + zombies_day1_wave3.length +
         zombies_day1_wave4.length + zombies_day1_wave5.length + zombies_day1_wave6.length + zombies_day1_wave7.length +
@@ -262,15 +259,12 @@ function draw()
         }
         //remove mouse_cursor
         noCursor();
-        //crosshair
-        crosshair();
         //ai.draw();
         ai_1.draw();
         ai_2.draw();
         ai_3.draw();
         ai_4.draw();
 
-  
         zombie_day1_draw();
         ai_bullet_setoff();
         bullet_check();
@@ -285,6 +279,9 @@ function draw()
         {
             day1_fadeout_img();
         }
+
+        //crosshair above zombies
+        crosshair();
     }
     else
     {
@@ -295,6 +292,18 @@ function draw()
     if ( count_start === false )
     {
         frameCount = 0;
+    }
+
+    //reload_check
+    if ( reload_check == true )
+    {
+        reload_time--;
+    }
+    if ( reload_time == 0 )
+    {
+        reload_time = fixed_reload_time;
+        reload_check = false;
+        player_gun_bullet = 7;
     }
 
     if ( game_mode == GAME_OVER )
@@ -313,14 +322,6 @@ function draw()
         tint_value = 0;
     }
 
-    /*let zombie_day1_length = zombies_day1_wave1.length + zombies_day1_wave2.length + zombies_day1_wave3.length +
-        zombies_day1_wave4 + zombies_day1_wave5;
-    let zombie_day2_length = zombies_day2_wave1.length + zombies_day2_wave2.length + zombies_day2_wave3.length +
-        zombies_day2_wave4;
-    let zombie_day3_length = zombies_day3_wave1.length + zombies_day3_wave2.length + zombies_day3_wave3.length +
-        zombies_day3_wave4;
-    let zombie_day4_length = zombies_day4_wave1.length + zombies_day4_wave2.length + zombies_day4_wave3.length +
-        zombies_day4_wave4;*/
 
     //if there are no zombie on day1 then day2 start!
     if ( zombie_day1_length <= 0 && game_mode != GAME_OVER )
@@ -350,19 +351,21 @@ function draw()
                 clear();
                 push();
                 background( 110 );
-                textSize( 30 );
+                textSize( 13 );
                 textAlign( CENTER );
-                text( "Press any key to start your next day.", width / 2, height / 2 + 150 );
+                text( "Move on to the next day.", 900, 480 );
                 pop();
                 ai_last_word();
+                intermission_arrow();
             }
         }
         if ( ready_for_day2 )
         {
-            game_mode = GAME_START;
+            //game_mode = GAME_START;
             fadeout();
             if ( screen_transparency == 255 )
             {
+                game_mode = GAME_START;
                 day2_fadeout_img();
                 zombie_day2_draw();
             }
@@ -396,19 +399,20 @@ function draw()
                 clear();
                 push();
                 background( 110 );
-                textSize( 30 );
+                textSize( 13 );
                 textAlign( CENTER );
-                text( "Press any key to start your next day.", width / 2, height / 2 + 150 );
+                text( "Move on to the next day.", 900, 480 );
                 pop();
                 ai_last_word();
+                intermission_arrow()
             }
         }
         if ( ready_for_day3 )
         {
-            game_mode = GAME_START;
             fadeout();
             if ( screen_transparency == 255 )
             {
+                game_mode = GAME_START;
                 day3_fadeout_img();
                 zombie_day3_draw();
             }
@@ -442,19 +446,20 @@ function draw()
                 clear();
                 push();
                 background( 110 );
-                textSize( 30 );
+                textSize( 13 );
                 textAlign( CENTER );
-                text( "Press any key to start your next day.", width / 2, height / 2 + 150 );
+                text( "Move on to the next day.", 900, 480 );
                 pop();
                 ai_last_word();
+                intermission_arrow()
             }
         }
         if ( ready_for_day4 )
         {
-            game_mode = GAME_START;
             fadeout();
             if ( screen_transparency == 255 )
             {
+                game_mode = GAME_START;
                 day4_fadeout_img();
                 zombie_day4_draw();
             }
@@ -488,19 +493,20 @@ function draw()
                 clear();
                 push();
                 background( 110 );
-                textSize( 30 );
+                textSize( 13 );
                 textAlign( CENTER );
-                text( "Press any key to start your next day.", width / 2, height / 2 + 150 );
+                text( "Move on to the next day.", 900, 480 );
                 pop();
                 ai_last_word();
+                intermission_arrow()
             }
         }
         if ( ready_for_day5 )
         {
-            game_mode = GAME_START;
             fadeout();
             if ( screen_transparency == 255 )
             {
+                game_mode = GAME_START;
                 day5_fadeout_img();
                 zombie_day5_draw();
             }
@@ -533,19 +539,20 @@ function draw()
                 clear();
                 push();
                 background( 110 );
-                textSize( 30 );
+                textSize( 13 );
                 textAlign( CENTER );
-                text( "Press any key to start your next day.", width / 2, height / 2 + 150 );
+                text( "Move on to the next day.", 900, 480 );
                 pop();
                 ai_last_word();
+                intermission_arrow()
             }
         }
         if ( ready_for_day_final )
         {
-            game_mode = GAME_START;
             final_day_fadeout();
             if ( final_day_screen_transparency == 255 )
             {
+                game_mode = GAME_START;
                 zombie_final_draw();
             }
         }
@@ -573,26 +580,37 @@ function ai_last_word()
 {
     push();
     textSize( 20 );
-    image(will_img,width/2-10,0);
+    image(will_img,width/2-10,5);
     if ( ai_1_survived == false )
     {
-        image( ai_img, 350 - 15, height / 2 - 50 );
-        
+        image( ai_img, 100,430 );
+        fill("red");
+        text("dead",100, 430);
+        fill("black");
         text( "Lyon: Please tell my family my death.", width / 2, 90 );
     }
     if ( ai_2_survived == false )
     {
-        image( ai2_img, 450 - 15, height / 2 - 50 );
+        image( ai2_img, 200, 430 )
+        fill("red");
+        text("dead",200, 430);
+        fill("black");;
         text( "Elon: Do not make my death wasted...", width / 2, 120 );
     }
     if ( ai_3_survived == false )
     {
-        image( ai3_img, 550 - 15, height / 2 - 50 );
+        image( ai3_img, 300, 430 );
+        fill("red");
+        text("dead",300, 430);
+        fill("black");
         text( "Alexander: I respect your decision.", width / 2, 150 );
     }
     if ( ai_4_survived == false )
     {
-        image( ai4_img, 650 - 15, height / 2 - 50 );
+        image( ai4_img, 400, 430 );
+        fill("red");
+        text("dead",400, 430);
+        fill("black");
         text( "Hudson: NO!! Why me? Go to hell you all", width / 2, 180 );
     }
     pop();
@@ -622,7 +640,10 @@ function pick_and_ban()
         if ( ai_1.x - 30 < mouseX && mouseX < ai_1.x + 30 && ai_1.y - 30 < mouseY && mouseY < ai_1.y + 30 )
         {
             fill("white");
+            push();
+            strokeWeight(3);
             rect(ai_1.x + 50, ai_1.y-10,250,50);
+            pop();
             fill( 'black' );
             //image( textBox_img, ai_1.x, ai_1.y - 35 );
             text( " Lyon : My family is waiting for me. Please save me! \n", ai_1.x + 50, ai_1.y );
@@ -631,7 +652,7 @@ function pick_and_ban()
             image(ai_picked_img, ai_1.x, ai_1.y+10);
             fill( 'black' );
             text( "\n\n    bullet damage: " + ai_1_damage, ai_1.x + 50, ai_1.y );
-            text( "\n\n\n    bullet speed: " + ai_1_speed, ai_1.x + 50, ai_1.y );
+            text( "\n\n\n    firing rate: " + round( 60 / ai_1_speed, 1 ) + " per second", ai_1.x + 50, ai_1.y );
             //text( "\n\n\nbullet speed: 12", ai_1.x + 50, ai_1.y );
             pop();
             if ( mouseIsPressed )
@@ -648,7 +669,10 @@ function pick_and_ban()
         if ( ai_2.x - 30 < mouseX && mouseX < ai_2.x + 30 && ai_2.y - 30 < mouseY && mouseY < ai_2.y + 30 )
         {
             fill("white");
+            push();
+            strokeWeight(3);
             rect(ai_2.x + 50, ai_2.y-10,280,50);
+            pop();
             fill( 'black' );
             //image( textBox3_img, ai_2.x, ai_2.y - 35 );
             text( " Elon : I am ready to sacrifice myself. I want to save others", ai_2.x + 50, ai_2.y );
@@ -657,7 +681,7 @@ function pick_and_ban()
             image(ai_picked_img, ai_2.x, ai_2.y+10);
             fill( 'black' );
             text( "\n\n    bullet damage: " + ai_2_damage, ai_2.x + 50, ai_2.y );
-            text( "\n\n\n    rate of fire: " + ai_2_speed, ai_2.x + 50, ai_2.y );
+            text( "\n\n\n    rate of fire: " + round( 60 / ai_2_speed, 1 ) + " per second", ai_2.x + 50, ai_2.y );
             //text( "\n\n\nbullet speed: 13", ai_2.x + 50, ai_2.y );
             pop();
             if ( mouseIsPressed )
@@ -675,7 +699,10 @@ function pick_and_ban()
         {
 
             fill("white");
+            push();
+            strokeWeight(3);
             rect(ai_3.x + 50, ai_3.y-10,380,50);
+            pop();
             fill( 'black' );
             //image( textBox2_img, ai_3.x, ai_3.y - 35 );
             text( " Alexander : You know I can kill zombies better than others. I must be left here!", ai_3.x + 50, ai_3
@@ -685,7 +712,7 @@ function pick_and_ban()
             image(ai_picked_img, ai_3.x, ai_3.y+10);
             fill( 'black' );
             text( "\n\n    bullet damage: " + ai_3_damage, ai_3.x + 50, ai_3.y );
-            text( "\n\n\n    rate of fire: " + ai_3_speed, ai_3.x + 50, ai_3.y );
+            text( "\n\n\n    rate of fire: " + round( 60 / ai_3_speed, 1 ) + " per second", ai_3.x + 50, ai_3.y );
             //text( "\n\n\nbullet speed: 40", ai_3.x + 50, ai_3.y );
             pop();
             if ( mouseIsPressed )
@@ -702,7 +729,10 @@ function pick_and_ban()
         if ( ai_4.x - 30 < mouseX && mouseX < ai_4.x + 30 && ai_4.y - 30 < mouseY && mouseY < ai_4.y + 30 )
         {
             fill("white");
+            push();
+            strokeWeight(3);
             rect(ai_4.x + 50, ai_4.y-10,280,50);
+            pop();
             fill( 'black' );
             //image( textBox3_img, ai_4.x, ai_4.y - 35 );
             text( " Hudson : PLEASE DON'T KILL ME!! I just don't wanna die!", ai_4.x + 50, ai_4.y );
@@ -710,7 +740,7 @@ function pick_and_ban()
             imageMode(CENTER);
             image(ai_picked_img, ai_4.x, ai_4.y+10);
             text( "\n\n    bullet damage: " + ai_4_damage, ai_4.x + 50, ai_4.y );
-            text( "\n\n\n    rate of fire: " + ai_4_speed, ai_4.x + 50, ai_4.y );
+            text( "\n\n\n    rate of fire: " + round( 60 / ai_4_speed, 1 ) + " per second", ai_4.x + 50, ai_4.y );
             //text( "\n\n\nbullet speed: 30", ai_4.x + 50, ai_4.y );
             pop();
             if ( mouseIsPressed )
